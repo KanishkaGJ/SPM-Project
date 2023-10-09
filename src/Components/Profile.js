@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { auth, fs } from "../Config/Config";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
-import { Navbar } from './Navbar'; 
 
 export const Profile = () => {
   const [userProfile, setUserProfile] = useState(null);
@@ -12,7 +11,6 @@ export const Profile = () => {
 
   useEffect(() => {
     const currentUser = auth.currentUser;
-
     if (currentUser) {
       fs.collection("users")
         .doc(currentUser.uid)
@@ -41,18 +39,53 @@ export const Profile = () => {
   };
 
   const saveEditedProfile = () => {
-    fs.collection("users")
-      .doc(auth.currentUser.uid)
-      .update(editedProfile)
-      .then(() => {
-        setUserProfile(editedProfile);
-        setEditing(false);
-      })
-      .catch((error) => {
-        console.error("Error updating document:", error);
+    // Check if there are any changes in the edited profile
+    const isProfileChanged =
+      JSON.stringify(editedProfile) !== JSON.stringify(userProfile);
+  
+    if (isProfileChanged) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to update your profile details?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, update it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          fs.collection("users")
+            .doc(auth.currentUser.uid)
+            .update(editedProfile)
+            .then(() => {
+              setUserProfile(editedProfile);
+              setEditing(false);
+              Swal.fire("Success!", "Your profile has been updated.", "success");
+            })
+            .catch((error) => {
+              console.error("Error updating document:", error);
+              Swal.fire("Error", "An error occurred while updating your profile.", "error");
+            });
+        }
       });
+    } else {
+      // Show a message if no changes were made
+      Swal.fire({
+        title: "No Changes",
+        text: "You haven't made any changes to your profile. Do you want to proceed anyway?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setEditing(false);
+        }
+      });
+    }
   };
-
+  
   const deleteAccount = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -80,89 +113,162 @@ export const Profile = () => {
     <div className="container">
       <br />
       <br />
-      <h1>User Profile</h1>
+      <center>
+        <h1>User Profile</h1>
+      </center>
       <hr />
       {userProfile && (
         <div>
-          {editing ? (
-            <div>
-              <form>
-                <div className="form-group">
-                  <label htmlFor="FullName">Full Name:</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="FullName"
-                    name="FullName"
-                    value={editedProfile.FullName}
-                    onChange={handleEditChange}
-                  />
+          <div className="profile-header">
+            <center>
+              {" "}
+              <div
+                className="profile-avatar"
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  backgroundColor: "black",
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: "2%",
+                }}
+              >
+                <div
+                  className="avatar-letter"
+                  style={{ color: "white", fontSize: "44px" }}
+                >
+                  {userProfile.FullName.charAt(0).toUpperCase()}
                 </div>
-                <div className="form-group">
-                  <label htmlFor="Email">Email:</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="Email"
-                    name="Email"
-                    value={editedProfile.Email}
-                    onChange={handleEditChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="ContactNumber">Contact Number:</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="ContactNumber"
-                    name="ContactNumber"
-                    value={editedProfile.ContactNumber}
-                    onChange={handleEditChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="Address">Address:</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="Address"
-                    name="Address"
-                    value={editedProfile.Address}
-                    onChange={handleEditChange}
-                  />
-                </div>
-              </form>
+              </div>
+            </center>
 
-              <button className="btn btn-success" onClick={saveEditedProfile}>
-                Save
-              </button>
+            <div className="profile-details">
+              {editing ? (
+                <form>
+                  <table
+                    className="table table-borderless"
+                    style={{ marginTop: "3%", marginLeft: "32%" }}
+                  >
+                    <tbody>
+                      <tr>
+                        <th style={{ width: "25%" }}>Full Name:</th>
+                        <td>
+                          <input
+                            type="text"
+                            style={{ width: "25%" }}
+                            className="form-control"
+                            id="FullName"
+                            name="FullName"
+                            value={editedProfile.FullName}
+                            onChange={handleEditChange}
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Email:</th>
+                        <td>
+                          <input
+                            type="email"
+                            style={{ width: "25%" }}
+                            className="form-control"
+                            id="Email"
+                            name="Email"
+                            value={editedProfile.Email}
+                            onChange={handleEditChange}
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Contact Number:</th>
+                        <td>
+                          <input
+                            type="text"
+                            style={{ width: "25%" }}
+                            className="form-control"
+                            id="ContactNumber"
+                            name="ContactNumber"
+                            value={editedProfile.ContactNumber}
+                            onChange={handleEditChange}
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Address:</th>
+                        <td>
+                          <input
+                            type="text"
+                            style={{ width: "25%" }}
+                            className="form-control"
+                            id="Address"
+                            name="Address"
+                            value={editedProfile.Address}
+                            onChange={handleEditChange}
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </form>
+              ) : (
+                <table
+                  className="table table-borderless"
+                  style={{ marginTop: "3%", marginLeft: "32%" }}
+                >
+                  <tbody>
+                    <tr>
+                      <th style={{ width: "25%" }}>Full Name</th>
+                      <td>{userProfile.FullName}</td>
+                    </tr>
+                    <br />
+                    <tr>
+                      <th>Email</th>
+                      <td>{userProfile.Email}</td>
+                    </tr>
+                    <br />
+                    <tr>
+                      <th>Contact Number</th>
+                      <td>{userProfile.ContactNumber}</td>
+                    </tr>
+                    <br />
+                    <tr>
+                      <th>Address</th>
+                      <td>{userProfile.Address}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              )}
             </div>
-          ) : (
-            <div>
-              <p>
-                <strong>Full Name:</strong> {userProfile.FullName}
-              </p>
-              <p>
-                <strong>Email:</strong> {userProfile.Email}
-              </p>
-              <p>
-                <strong>Contact Number:</strong> {userProfile.ContactNumber}
-              </p>
-              <p>
-                <strong>Address:</strong> {userProfile.Address}
-              </p>
-              <button className="btn btn-primary" onClick={enableEditing}>
-                Edit Profile
-              </button>
+          </div>
+          <center>
+            <div style={{ marginTop: "30px" }}>
+              {editing ? (
+                <button
+                  className="btn btn-success"
+                  onClick={saveEditedProfile}
+                  style={{ marginLeft: "20px" }}
+                >
+                  Save
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary"
+                  onClick={enableEditing}
+                  style={{ marginLeft: "25px" }}
+                >
+                  Edit Profile
+                </button>
+              )}
               <button
                 className="btn btn-danger"
                 onClick={deleteAccount}
-                style={{ marginLeft: "10px" }}
+                style={{ marginLeft: "20px" }}
               >
                 Delete Account
               </button>
             </div>
-          )}
+          </center>
         </div>
       )}
       {!userProfile && <p>Loading...</p>}

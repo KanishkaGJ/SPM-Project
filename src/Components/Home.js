@@ -206,7 +206,7 @@ export const Home = (props) => {
           position: "fixed",
           bottom: "20px",
           right: "20px",
-          background: "#007BFF",
+          background: "#000000",
           color: "#fff",
           borderRadius: "5px",
           padding: "10px 20px",
