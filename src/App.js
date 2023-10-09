@@ -7,6 +7,7 @@ import { NotFound } from './Components/NotFound'
 import { AddProducts } from './Components/AddProducts'
 import { Cart } from './Components/Cart'
 import { SellerShop } from './Components/SellerShop'
+import { Profile } from "./Components/Profile";
 
 export const App = () => {
   return (
@@ -17,11 +18,12 @@ export const App = () => {
         <Route path="/login" component={Login}/>
         <Route path="/add-products" component={AddProducts}/>
         <Route path="/cart" component={Cart}/> 
-        <Route path="/seller-shop" component={SellerShop}/>      
+        <Route path="/seller-shop" component={SellerShop}/>   
+        <Route path="/profile" component={Profile} />   
         <Route component={NotFound}/>        
       </Switch>
     </BrowserRouter>
-  )
-}
+  );
+};
 
-export default App
+export default App;
