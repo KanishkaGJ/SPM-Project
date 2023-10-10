@@ -30,6 +30,7 @@ export const Cart = () => {
     // getting current user function
     function GetCurrentUser(){
         const [user, setUser]=useState(null);
+
         useEffect(()=>{
             auth.onAuthStateChanged(user=>{
                 if(user){
@@ -45,6 +46,69 @@ export const Cart = () => {
         return user;
     }
 
+    // getting current user's phone function
+    function GetCurrentUsePhone(){
+        const [phone, setPhone]=useState(null);
+
+        useEffect(()=>{
+            auth.onAuthStateChanged(user=>{
+                if(user){
+                    fs.collection('users').doc(user.uid).get().then(snapshot=>{
+                        setPhone(snapshot.data().ContactNumber);
+                        
+                    })
+                }
+                else{
+                    setPhone(null);
+                }
+            })
+        },[])
+        return phone;
+    }
+
+    // getting current user's address function
+    function GetCurrentUseAddress(){
+        const [address, setAddress]=useState(null);
+
+        useEffect(()=>{
+            auth.onAuthStateChanged(user=>{
+                if(user){
+                    fs.collection('users').doc(user.uid).get().then(snapshot=>{
+                        setAddress(snapshot.data().Address);
+                        
+                    })
+                }
+                else{
+                    setAddress(null);
+                }
+            })
+        },[])
+        return address;
+    }
+
+    // getting current user's email function
+    function GetCurrentUseEmail(){
+        const [email, setEmail]=useState(null);
+
+        useEffect(()=>{
+            auth.onAuthStateChanged(user=>{
+                if(user){
+                    fs.collection('users').doc(user.uid).get().then(snapshot=>{
+                        setEmail(snapshot.data().Email);
+                        
+                    })
+                }
+                else{
+                    setEmail(null);
+                }
+            })
+        },[])
+        return email;
+    }
+
+    const email = GetCurrentUseEmail();
+    const phone = GetCurrentUsePhone();
+    const address = GetCurrentUseAddress();
     const user = GetCurrentUser();
     // console.log(user);
     
@@ -153,6 +217,9 @@ export const Cart = () => {
      const history = useHistory();
      const handleToken = async(token)=>{
         //  console.log(token);
+
+        const userEmail = user ? user.Email : ''; // Use the user's email if available, or an empty string if not
+
         const cart = {name: 'All Products', totalPrice}
         const response = await axios.post('http://localhost:8080/checkout',{
             token,
@@ -212,7 +279,8 @@ export const Cart = () => {
                             token={handleToken}
                             billingAddress
                             shippingAddress
-                            name='All Products'
+                            name='All Products'  
+                            email={email}
                             amount={totalPrice * 100}
                         ></StripeCheckout> 
                          <h6 className='text-center'
@@ -227,9 +295,7 @@ export const Cart = () => {
             ) }
 
             {showModal===true&&(
-                <Modal TotalPrice={totalPrice} totalQty={totalQty}
-                    hideModal={hideModal}
-                />
+                <Modal TotalPrice={totalPrice} totalQty={totalQty} hideModal={hideModal} phone={phone} address={address}/>
             )}          
                             
         </>

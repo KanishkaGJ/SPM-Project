@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 toast.configure();
 
-export const Modal = ({TotalPrice,totalQty,hideModal}) => {
+export const Modal = ({TotalPrice,totalQty,hideModal,phone,address}) => {
 
     const history = useHistory();
 
@@ -60,12 +60,12 @@ export const Modal = ({TotalPrice,totalQty,hideModal}) => {
         <div className='modal-container'>
             <form className='form-group' onSubmit={handleCashOnDelivery}>                   
                 <input type="number" className='form-control' placeholder='Cell No'
-                    required onChange={(e)=>setCell(e.target.value)} value={cell}                        
+                    required onChange={(e)=>setCell(e.target.value)} value={phone}                        
                 />
                 <br></br>
-                <input type="text" className='form-control' placeholder='Residential Address'
+                <input type="text" className='form-control' placeholder={'Residential Address'}
                     required onChange={(e)=>setResidentialAddress(e.target.value)}
-                    value={residentialAddress}
+                    value={address}
                 />
                 <br></br>
                 <label>Total Quantity</label>
