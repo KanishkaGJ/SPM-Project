@@ -5,11 +5,13 @@ import Swal from "sweetalert2";
 import { Navbar } from "./Navbar";
 import { arrowLeft } from "react-icons-kit/feather/arrowLeft";
 import { Icon } from "react-icons-kit";
+
 export const Profile = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [editing, setEditing] = useState(false);
   const [editedProfile, setEditedProfile] = useState({});
   const history = useHistory();
+
   useEffect(() => {
     const currentUser = auth.currentUser;
     if (currentUser) {
@@ -28,14 +30,27 @@ export const Profile = () => {
           console.error("Error getting document:", error);
         });
     }
+
+    // Add the following code to prevent scrolling
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      // Clean up and allow scrolling when the component unmounts
+      document.documentElement.style.overflow = "auto";
+      document.body.style.overflow = "auto";
+    };
   }, []);
+
   const enableEditing = () => {
     setEditing(true);
   };
+
   const handleEditChange = (e) => {
     const { name, value } = e.target;
     setEditedProfile({ ...editedProfile, [name]: value });
   };
+
   const saveEditedProfile = () => {
     const isProfileChanged =
       JSON.stringify(editedProfile) !== JSON.stringify(userProfile);
@@ -76,7 +91,8 @@ export const Profile = () => {
     } else {
       Swal.fire({
         title: "No Changes",
-        text: "You haven't made any changes to your profile. Do you want to proceed anyway?",
+        text:
+          "You haven't made any changes to your profile. Do you want to proceed anyway?",
         icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -89,7 +105,9 @@ export const Profile = () => {
       });
     }
   };
+
   const [totalProducts, setTotalProducts] = useState(0);
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -100,6 +118,7 @@ export const Profile = () => {
       }
     });
   }, []);
+
   const deleteAccount = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -122,8 +141,10 @@ export const Profile = () => {
       }
     });
   };
+
   function GetCurrentUser() {
     const [user, setUser] = useState(null);
+
     useEffect(() => {
       auth.onAuthStateChanged((user) => {
         if (user) {
@@ -138,9 +159,12 @@ export const Profile = () => {
         }
       });
     }, []);
+
     return user;
   }
+
   const user = GetCurrentUser();
+
   return (
     <div>
       <Navbar user={user} totalProducts={totalProducts} />
@@ -150,14 +174,18 @@ export const Profile = () => {
         <div style={{ display: "flex", alignItems: "center" }}>
           <button
             className="btn btn-link"
-            onClick={() => history.goBack()} // Go back to the previous page
+            onClick={() => history.goBack()}
           >
-            <Icon icon={arrowLeft} size={34} style={{ marginTop:"2%", marginLeft:"-100%", color:"#000000" }} /> {/* Render the back button icon */}
+            <Icon
+              icon={arrowLeft}
+              size={34}
+              style={{ marginTop: "2%", marginLeft: "-100%", color: "#000000" }}
+            />
           </button>
-          
         </div>
-        <center><h1 style={{ marginTop:"-3%" }} >User Profile</h1></center>
-      
+        <center>
+          <h1 style={{ marginTop: "-3%" }}>User Profile</h1>
+        </center>
         <hr />
         {userProfile && (
           <div>
@@ -308,6 +336,8 @@ export const Profile = () => {
                 >
                   Delete Account
                 </button>
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                <div style={{ color:"white" }}>fgfgfgf</div>
               </div>
             </center>
           </div>

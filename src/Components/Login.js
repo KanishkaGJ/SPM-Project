@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import login from "../Images/login.png";
 
 export const Login = () => {
   const history = useHistory();
@@ -19,7 +20,7 @@ export const Login = () => {
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         setSuccessMsg(
-          "Login Successfull. You will now automatically get redirected to Home page"
+          "Login Successful. You will now automatically get redirected to the Home page"
         );
         setEmail("");
         setPassword("");
@@ -31,6 +32,7 @@ export const Login = () => {
       })
       .catch((error) => setErrorMsg(error.message));
   };
+
   const handleSignupClick = () => {
     history.push("/signup");
   };
@@ -38,65 +40,103 @@ export const Login = () => {
   const loginButtonStyle = {
     marginTop: "1%",
     backgroundColor: "black",
-    color: "white", 
+    color: "white",
   };
 
+  const containerStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+  };
+
+  const contentStyle = {
+    width: "50%",
+    padding: "20px",
+  };
+
+  const formContainerStyle = {
+    width: "50%",
+    padding: "20px",
+    borderRight: "1px solid #ccc", // Add a vertical line here
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+
+  const imageUrl = "https://example.com/your-image.jpg";
+
   return (
-    <div className="container" style={{ marginTop: "10%" }}>
-      <center>
-        <br></br>
-        <br></br>
-        <h1>Login</h1>
-        {successMsg && (
-          <>
-            <div className="success-msg">{successMsg}</div>
-            <br></br>
-          </>
-        )}
-        <form className="form-group" autoComplete="off" onSubmit={handleLogin}>
-          <TextField
-            id="standard-basic"
-            label="Email"
-            variant="standard"
-            required
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          />
+    <div className="container" style={containerStyle}>
+      <div style={formContainerStyle}>
+        <img
+          src={imageUrl}
+          alt="Your Image"
+          style={{ maxWidth: "100%", maxHeight: "100%" }}
+        />
+      </div>
+      <div style={contentStyle}>
+        {/* Add your existing content here */}
+        <center>
           <br />
           <br />
-          <TextField
-            id="standard-basic"
-            label="Password"
-            variant="standard"
-            required
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          />
-          <br />
-          <br />
-          <Button type="submit" variant="outlined" style={loginButtonStyle}>
-            LOGIN
-          </Button>
-        </form>
-        <br />
-        <br />
-        <p>Don't have an account ?</p>
-        <Box sx={{ "& button": { m: 1 } }}>
-          <Button
-            size="large"
-            style={{ marginTop: "-1%", color: "black" }}
-            onClick={handleSignupClick}
+          <h1>Login</h1>
+          {successMsg && (
+            <>
+              <div className="success-msg">{successMsg}</div>
+              <br />
+            </>
+          )}
+          <form
+            className="form-group"
+            autoComplete="off"
+            onSubmit={handleLogin}
           >
-            SIGNUP
-          </Button>
-        </Box>
-        {errorMsg && (
-          <>
-            <br></br>
-            <div className="error-msg">{errorMsg}</div>
-          </>
-        )}
-      </center>
+            <TextField
+              id="standard-basic"
+              label="Email"
+              variant="standard"
+              required
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            />
+            <br />
+            <br />
+            <TextField
+              id="password"
+              label="Password"
+              variant="standard"
+              type="password"
+              required
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+            />
+            <br />
+            <br />
+            <Button type="submit" variant="outlined" style={loginButtonStyle}>
+              LOGIN
+            </Button>
+          </form>
+          <br />
+          <br />
+          <p>Don't have an account?</p>
+          <Box sx={{ "& button": { m: 1 } }}>
+            <Button
+              size="large"
+              style={{ marginTop: "-1%", color: "black" }}
+              onClick={handleSignupClick}
+            >
+              SIGNUP
+            </Button>
+          </Box>
+          {errorMsg && (
+            <>
+              <br />
+              <div className="error-msg">{errorMsg}</div>
+            </>
+          )}
+        </center>
+      </div>
     </div>
   );
 };
