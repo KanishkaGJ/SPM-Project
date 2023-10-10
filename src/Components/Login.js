@@ -74,7 +74,6 @@ export const Login = () => {
         />
       </div>
       <div style={contentStyle}>
-        {/* Add your existing content here */}
         <center style={{ marginLeft: "50%" }}>
           <br />
           <br />

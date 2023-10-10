@@ -1,8 +1,8 @@
-/* ChatComponent.css */
-.chat-component {
+.fixed-chat-component {
     position: fixed;
-    bottom: 20px; /* Adjust this value to change the vertical position */
-    right: 20px; /* Adjust this value to change the horizontal position */
-    /* Add other styling properties as needed */
+    bottom: 20px; /* Adjust the bottom value to position it vertically as needed */
+    right: 20px; /* Adjust the right value to position it horizontally as needed */
+    z-index: 1000; /* Adjust the z-index as needed to ensure it appears above other content */
   }
+  
   

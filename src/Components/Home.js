@@ -7,7 +7,7 @@ import "./Home.css";
 import bannerImage from "../Images/herov2.jpg";
 import ChatComponent from "./ChatBox";
 import ChatBot from "react-simple-chatbot";
-import "./ChatComponent.css"; 
+import "./ChatComponent.css";
 
 export const Home = (props) => {
   function GetUserUid() {
@@ -41,7 +41,6 @@ export const Home = (props) => {
     return user;
   }
 
-  
   const user = GetCurrentUser();
   const [products, setProducts] = useState([]);
   const getProducts = async () => {
@@ -218,6 +217,9 @@ export const Home = (props) => {
             </div>
           </div>
         </div>
+       
+      </div>
+      <div className="fixed-chat-component">
         <ChatComponent />
       </div>
     </>
