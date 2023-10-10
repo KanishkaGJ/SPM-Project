@@ -52,13 +52,11 @@ export const Login = () => {
   const formContainerStyle = {
     width: "50%",
     padding: "20px",
-    borderRight: "1px solid #ccc", // Add a vertical line here
+    borderRight: "1px solid #ccc",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
   };
-
-  // Disable scrolling when the Login component mounts
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
@@ -69,14 +67,21 @@ export const Login = () => {
   return (
     <div className="container" style={containerStyle}>
       <div style={formContainerStyle}>
-        <img src={login} alt="Your Image" style={{ marginLeft: "-26%" }} />
+        <img
+          src={login}
+          alt="Your Image"
+          style={{ marginLeft: "-26%", marginTop: "7%" }}
+        />
       </div>
       <div style={contentStyle}>
         {/* Add your existing content here */}
         <center style={{ marginLeft: "50%" }}>
           <br />
           <br />
-          <h1 style={{ marginTop: "-20%", marginBottom: "20%" }}>Login</h1>
+          <h1 style={{ marginTop: "-20%", marginBottom: "10%" }}>
+            Welcome Back!
+          </h1>
+          <h6 style={{ marginBottom: "15%" }}>Login to continue</h6>
           {successMsg && (
             <>
               <div className="success-msg">{successMsg}</div>
