@@ -5,6 +5,7 @@ import { auth, fs } from "../Config/Config";
 import { IndividualFilteredProduct } from "./IndividualFilteredProduct";
 import "./Home.css";
 import bannerImage from "../Images/herov2.jpg";
+import { HomeFooter } from "./HomeFooter.js";
 
 export const Home = (props) => {
   // getting current user uid
@@ -249,6 +250,7 @@ export const Home = (props) => {
           </div>
         </div>
       </div>
+      <HomeFooter />
     </>
   );
 };
