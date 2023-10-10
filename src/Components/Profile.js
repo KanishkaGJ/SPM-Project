@@ -166,16 +166,13 @@ export const Profile = () => {
   const user = GetCurrentUser();
 
   return (
-    <div>
+    <div style={{ backgroundColor: "#F0F8FC " }}>
       <Navbar user={user} totalProducts={totalProducts} />
       <div className="container">
         <br />
         <br />
         <div style={{ display: "flex", alignItems: "center" }}>
-          <button
-            className="btn btn-link"
-            onClick={() => history.goBack()}
-          >
+          <button className="btn btn-link" onClick={() => history.goBack()}>
             <Icon
               icon={arrowLeft}
               size={34}
@@ -186,7 +183,7 @@ export const Profile = () => {
         <center>
           <h1 style={{ marginTop: "-3%" }}>User Profile</h1>
         </center>
-        <hr />
+        <br />
         {userProfile && (
           <div>
             <div className="profile-header">
@@ -336,8 +333,30 @@ export const Profile = () => {
                 >
                   Delete Account
                 </button>
-                <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-                <div style={{ color:"white" }}>fgfgfgf</div>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br/>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <div style={{ color: "white" }}></div>
               </div>
             </center>
           </div>

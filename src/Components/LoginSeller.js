@@ -7,9 +7,9 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import background from "../Images/herov3.jpg";
-import { Navbar } from "./Navbar";
-export const Login = () => {
+import background from "../Images/login1.png";
+
+export const LoginSeller = () => {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +28,7 @@ export const Login = () => {
         setErrorMsg("");
         setTimeout(() => {
           setSuccessMsg("");
-          history.push("/");
+          history.push("/add-products");
         }, 3000);
       })
       .catch((error) => setErrorMsg(error.message));
@@ -43,15 +43,11 @@ export const Login = () => {
   };
   const containerStyle = {
     display: "flex",
-    position: "relative",
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
-    backgroundPosition: "center",
-    width: "100vw", // Changed to vw (viewport width)
     background: `url(${background}) no-repeat center center fixed`,
-    backgroundSize: "cover", // Set to "cover" to fit the screen
-    marginLeft:"0%",
+    backgroundSize: "cover",
   };
   const cardStyle = {
     width: "50%",
@@ -68,16 +64,13 @@ export const Login = () => {
   };
   useEffect(() => {
     document.body.style.overflow = "hidden";
-    document.body.style.margin = "0"; // Add this line
-    document.body.style.padding = "0"; // Add this line
     return () => {
       document.body.style.overflow = "auto";
     };
   }, []);
-  
+
   return (
     <div>
-      <Navbar />
       <div className="container" style={containerStyle}>
         <Card style={cardStyle}>
           <CardContent>

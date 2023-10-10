@@ -10,7 +10,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Navbar } from "./Navbar"; // Import the Navbar component
-import background from "../Images/login1.png";
+import background from "../Images/herov3.jpg";
 
 export const Signup = () => {
   const history = useHistory();
@@ -21,7 +21,6 @@ export const Signup = () => {
   const [address, setAddress] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
-
   const handleSignup = (e) => {
     e.preventDefault();
     if (!contactNumber) {
@@ -65,43 +64,36 @@ export const Signup = () => {
         setErrorMsg(error.message);
       });
   };
-
   const handleLoginClick = () => {
     history.push("/login");
   };
-
   const signupButtonStyle = {
     marginTop: "2%",
     backgroundColor: "black",
     color: "white",
   };
-
   const containerStyle = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
     background: `url(${background}) no-repeat center center fixed`,
-    backgroundSize: "100% 100%", // Set the background size to cover the entire screen
+    backgroundSize: "cover",
+    marginLeft: "0%",
   };
-
   const cardStyle = {
     width: "50%",
     padding: "20px",
   };
-
   const imageStyle = {
     display: "flex",
     justifyContent: "center",
   };
-
   const formStyle = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
   };
-
-  // Disable scrolling when the Signup component mounts
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
@@ -111,7 +103,7 @@ export const Signup = () => {
 
   return (
     <div>
-      <Navbar /> 
+      <Navbar />
       <div className="container" style={containerStyle}>
         <Card style={cardStyle}>
           <CardContent>

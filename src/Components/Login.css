@@ -8,5 +8,14 @@
     alignItems: center;
     background-color: #f0e0d0 !important; /* Add !important */
   }
-
+  body, html {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    margin: 0;
+    padding: 0;
+  }
+  
   
