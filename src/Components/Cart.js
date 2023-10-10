@@ -271,7 +271,7 @@ export const Cart = () => {
                         Total No of Products: <span>{totalQty}</span>
                         </div>
                         <div>
-                        Total Price to Pay: <span>$ {totalPrice}</span>
+                        Total Price to Pay: <span>Rs. {totalPrice}</span>
                         </div>
                         <br></br>
                         <StripeCheckout

@@ -19,10 +19,11 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+   
   }
   
   .product-card {
-    flex-basis: calc(33.33% - 20px); /* Adjust the width as needed */
+    flex-basis: calc(25% - 20px); /* Adjust the width as needed */
     margin: 10px;
     margin-bottom: 50px;
     padding: 20px;
@@ -31,8 +32,10 @@
   }
   
   .product-card img {
-    max-width: 100%;
+    max-width: 50%;
     height: auto;
+    display: block; /* Ensure the image is a block element */
+    margin: 0 auto;
   }
   
   .product-card h3 {
