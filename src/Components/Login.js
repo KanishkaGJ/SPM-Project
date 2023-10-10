@@ -51,7 +51,9 @@ export const Login = () => {
     width: "100vw", // Changed to vw (viewport width)
     background: `url(${background}) no-repeat center center fixed`,
     backgroundSize: "cover", // Set to "cover" to fit the screen
-    marginLeft:"0%",
+    maxWidth: "-webkit-fill-available"
+
+
   };
   const cardStyle = {
     width: "50%",
@@ -74,7 +76,7 @@ export const Login = () => {
       document.body.style.overflow = "auto";
     };
   }, []);
-  
+
   return (
     <div>
       <Navbar />

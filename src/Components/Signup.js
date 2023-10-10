@@ -79,7 +79,7 @@ export const Signup = () => {
     height: "100vh",
     background: `url(${background}) no-repeat center center fixed`,
     backgroundSize: "cover",
-    marginLeft: "0%",
+    maxWidth: "-webkit-fill-available"
   };
   const cardStyle = {
     width: "50%",
