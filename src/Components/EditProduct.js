@@ -11,7 +11,7 @@ export const EditProduct = () => {
     title: "",
     description: "",
     price: 0,
-    imageUrl: "",
+    url: "",
   });
 
   const [imageFile, setImageFile] = useState(null);
@@ -33,19 +33,19 @@ export const EditProduct = () => {
 
   // Fetch the product image from Firebase Storage
   useEffect(() => {
-    if (product.imageUrl) {
+    if (product.url) {
       storage
         .ref()
-        .child(product.imageUrl)
+        .child(product.url)
         .getDownloadURL()
         .then((url) => {
-          setEditedProduct({ ...editedProduct, imageUrl: url });
+          setEditedProduct({ ...editedProduct, url: url });
         })
         .catch((error) => {
           console.error("Error fetching image URL:", error);
         });
     }
-  }, [product.imageUrl]);
+  }, [product.url]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -57,8 +57,8 @@ export const EditProduct = () => {
     setImageFile(file);
 
     // Display the selected image immediately
-    const imageUrl = URL.createObjectURL(file);
-    setEditedProduct({ ...editedProduct, imageUrl });
+    const url = URL.createObjectURL(file);
+    setEditedProduct({ ...editedProduct, url });
   };
 
   const handleSave = () => {
@@ -82,11 +82,11 @@ export const EditProduct = () => {
     if (imageFile) {
       const imageRef = storage.ref().child(`product_images/${productId}`);
       imageRef.put(imageFile).then((snapshot) => {
-        snapshot.ref.getDownloadURL().then((imageUrl) => {
+        snapshot.ref.getDownloadURL().then((url) => {
           // Update the imageUrl field in Firestore
           fs.collection("Products")
             .doc(productId)
-            .update({ imageUrl })
+            .update({ url })
             .then(() => {
               console.log("Image URL updated successfully");
             })
@@ -101,11 +101,11 @@ export const EditProduct = () => {
   return (
     <div className="edit-product-container">
       <h1>Edit Product</h1>
-      {editedProduct.imageUrl && (
+      {editedProduct.url && (
         <div>
           <label>Current Image:</label>
           <img
-            src={editedProduct.imageUrl}
+            src={editedProduct.url}
             alt="Product"
             style={{ maxWidth: "200px" }}
           />
