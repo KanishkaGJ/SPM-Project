@@ -209,8 +209,9 @@ export const Home = (props) => {
         <div className="row">
           <div className="col-md-3 filter-box">
             <h6>Filter by category</h6>
-
+            
             {spans.map((individualSpan, index) => (
+              <div className="underline" style={{ marginBottom: "20px" }}>
               <span
                 key={index}
                 id={individualSpan.id}
@@ -219,6 +220,7 @@ export const Home = (props) => {
               >
                 {individualSpan.text}
               </span>
+              </div>
             ))}
           </div>
           <div className="col-md-9 product-container-scroll">
