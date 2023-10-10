@@ -6,6 +6,7 @@ import { IndividualFilteredProduct } from "./IndividualFilteredProduct";
 import "./Home.css";
 import bannerImage from "../Images/herov3.jpg";
 import { Link } from "react-router-dom";
+import { SellerFooter } from "./SellerFooter";
 
 export const SellerShop = (props) => {
   // state of products
@@ -171,6 +172,7 @@ export const SellerShop = (props) => {
           </div>
         </div>
       </div>
+      <SellerFooter />
     </>
   );
 };
