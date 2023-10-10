@@ -98,20 +98,37 @@ export const EditProduct = () => {
     }
   };
 
+  const handleDelete = () => {
+    // Delete the product from Firestore
+    fs.collection("Products")
+      .doc(productId)
+      .delete()
+      .then(() => {
+        console.log("Product deleted successfully");
+        history.push("/seller-shop"); // Navigate to /seller-shop after deletion
+      })
+      .catch((error) => {
+        console.error("Error deleting product:", error);
+      });
+  };
+
   return (
     <div className="edit-product-container">
       <h1>Edit Product</h1>
       {editedProduct.url && (
         <div>
-          <label>Current Image:</label>
           <img
             src={editedProduct.url}
             alt="Product"
-            style={{ maxWidth: "200px" }}
+            style={{
+              maxWidth: "200px",
+              marginBottom: "30px",
+              marginTop: "30px",
+            }}
           />
         </div>
       )}
-      <div>
+      <div className="label-input-row">
         <label>Title:</label>
         <input
           type="text"
@@ -120,7 +137,7 @@ export const EditProduct = () => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="label-input-row">
         <label>Description:</label>
         <input
           type="text"
@@ -129,7 +146,7 @@ export const EditProduct = () => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="label-input-row">
         <label>Price:</label>
         <input
           type="number"
@@ -138,11 +155,16 @@ export const EditProduct = () => {
           onChange={handleInputChange}
         />
       </div>
-      <div>
+      <div className="label-input-row">
         <label>New Image:</label>
         <input type="file" onChange={handleImageChange} />
       </div>
-      <button onClick={handleSave}>Save</button>
+      <div className="button-row">
+        <button onClick={handleSave}>Save</button>
+        <button onClick={handleDelete} className="delete-button">
+          Delete Product
+        </button>
+      </div>
       {isProductUpdated && <p>Product Updated</p>}
     </div>
   );
