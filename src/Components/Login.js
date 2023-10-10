@@ -4,8 +4,11 @@ import { auth } from "../Config/Config";
 import { useHistory } from "react-router-dom";
 import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import login from "../Images/login.png";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import background from "../Images/login1.png";
+import {Navbar} from "./Navbar"; 
 
 export const Login = () => {
   const history = useHistory();
@@ -13,6 +16,7 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+
   const handleLogin = (e) => {
     e.preventDefault();
     auth
@@ -31,32 +35,43 @@ export const Login = () => {
       })
       .catch((error) => setErrorMsg(error.message));
   };
+
   const handleSignupClick = () => {
     history.push("/signup");
   };
+
   const loginButtonStyle = {
     marginTop: "10%",
     backgroundColor: "black",
     color: "white",
   };
+
   const containerStyle = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
+    background: `url(${background}) no-repeat center center fixed`,
+    backgroundSize: "100% 100%", // Set the background size to cover the entire screen
   };
-  const contentStyle = {
+  
+
+  const cardStyle = {
     width: "50%",
     padding: "20px",
   };
-  const formContainerStyle = {
-    width: "50%",
-    padding: "20px",
-    borderRight: "1px solid #ccc",
+
+  const formStyle = {
     display: "flex",
-    justifyContent: "center",
+    flexDirection: "column",
     alignItems: "center",
   };
+
+  const imageStyle = {
+    display: "flex",
+    justifyContent: "center",
+  };
+
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
@@ -65,77 +80,76 @@ export const Login = () => {
   }, []);
 
   return (
-    <div className="container" style={containerStyle}>
-      <div style={formContainerStyle}>
-        <img
-          src={login}
-          alt="Your Image"
-          style={{ marginLeft: "-26%", marginTop: "7%" }}
-        />
-      </div>
-      <div style={contentStyle}>
-        <center style={{ marginLeft: "50%" }}>
-          <br />
-          <br />
-          <h1 style={{ marginTop: "45%", marginBottom: "10%" }}>
-            Welcome Back!
-          </h1>
-          <h6 style={{ marginBottom: "15%" }}>Login to continue</h6>
-          {successMsg && (
-            <>
-              <div className="success-msg">{successMsg}</div>
-              <br />
-            </>
-          )}
-          <form
-            className="form-group"
-            autoComplete="off"
-            onSubmit={handleLogin}
-          >
-            <TextField
-              id="standard-basic"
-              label="Email"
-              variant="standard"
-              required
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-            />
-            <br />
-            <br />
-            <TextField
-              id="password"
-              label="Password"
-              variant="standard"
-              type="password"
-              required
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-            />
-            <br />
-            <br />
-            <Button type="submit" variant="outlined" style={loginButtonStyle}>
-              LOGIN
-            </Button>
-          </form>
-          <br />
-          <br />
-          <p>Don't have an account?</p>
-          <Box sx={{ "& button": { m: 1 } }}>
-            <Button
-              size="large"
-              style={{ marginTop: "-1%", color: "black" }}
-              onClick={handleSignupClick}
+    <div>
+      <Navbar /> {/* Include the Navbar component */}
+      <div className="container" style={containerStyle}>
+        <Card style={cardStyle}>
+          <CardContent>
+            <div style={imageStyle}></div>
+            <Typography
+              variant="h4"
+              align="center"
+              style={{ marginTop: "20px" }}
             >
-              SIGNUP
-            </Button>
-          </Box>
-          {errorMsg && (
-            <>
-              <br />
-              <div className="error-msg">{errorMsg}</div>
-            </>
-          )}
-        </center>
+              Welcome Back!
+            </Typography>
+            <br />
+            <br />
+            <Typography
+              variant="h6"
+              align="center"
+              style={{ marginBottom: "15px" }}
+            >
+              Login to continue
+            </Typography>
+            {successMsg && (
+              <div className="success-msg" style={{ marginTop: "20px" }}>
+                {successMsg}
+              </div>
+            )}
+            <form
+              className="form-group"
+              autoComplete="off"
+              onSubmit={handleLogin}
+              style={formStyle}
+            >
+              <TextField
+                id="standard-basic"
+                label="Email"
+                variant="standard"
+                required
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                style={{ marginBottom: "20px" }}
+              />
+              <TextField
+                id="password"
+                label="Password"
+                variant="standard"
+                type="password"
+                required
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                style={{ marginBottom: "20px" }}
+              />
+              <Button type="submit" variant="outlined" style={loginButtonStyle}>
+                LOGIN
+              </Button>
+            </form>
+            <Typography
+              variant="body1"
+              align="center"
+              style={{ marginTop: "20px" }}
+            >
+              Don't have an account? <Link to="/signup">SIGNUP</Link>
+            </Typography>
+            {errorMsg && (
+              <div className="error-msg" style={{ marginTop: "20px" }}>
+                {errorMsg}
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
