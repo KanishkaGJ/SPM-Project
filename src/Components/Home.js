@@ -3,6 +3,8 @@ import { Navbar } from "./Navbar";
 import { Products } from "./Products";
 import { auth, fs } from "../Config/Config";
 import { IndividualFilteredProduct } from "./IndividualFilteredProduct";
+import "./Home.css";
+import bannerImage from "../Images/herov2.jpg";
 
 export const Home = (props) => {
   // getting current user uid
@@ -145,76 +147,108 @@ export const Home = (props) => {
     setFilteredProducts([]);
   };
 
-  const handleChatButtonClick = () => {
-    alert("Chat functionality will be implemented here.");
-  };
-
   return (
     <>
       <Navbar user={user} totalProducts={totalProducts} />
-      <br></br>
-      <div className="container-fluid filter-products-main-box">
-        <div className="filter-box">
-          <h6>Filter by category</h6>
-          {spans.map((individualSpan, index) => (
-            <span
-              key={index}
-              id={individualSpan.id}
-              onClick={() => handleChange(individualSpan)}
-              className={individualSpan.id === active ? active : "deactive"}
-            >
-              {individualSpan.text}
-            </span>
-          ))}
-        </div>
-        {filteredProducts.length > 0 && (
-          <div className="my-products">
-            <h1 className="text-center">{category}</h1>
-            <a href="javascript:void(0)" onClick={returntoAllProducts}>
-              Return to All Products
-            </a>
-            <div className="products-box">
-              {filteredProducts.map((individualFilteredProduct) => (
-                <IndividualFilteredProduct
-                  key={individualFilteredProduct.ID}
-                  individualFilteredProduct={individualFilteredProduct}
-                  addToCart={addToCart}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-        {filteredProducts.length < 1 && (
-          <>
-            {products.length > 0 && (
-              <div className="my-products">
-                <h1 className="text-center">All Products</h1>
-                <div className="products-box">
-                  <Products products={products} addToCart={addToCart} />
-                </div>
-              </div>
-            )}
-            {products.length < 1 && (
-              <div className="my-products please-wait">Please wait...</div>
-            )}
-          </>
-        )}
-      </div>
-      <button
-        onClick={handleChatButtonClick}
+      <br />
+
+      <div
         style={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          background: "#000000",
-          color: "#fff",
-          borderRadius: "5px",
-          padding: "10px 20px",
-          cursor: "pointer",
+          backgroundImage: `url(${bannerImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          height: "300px",
+          position: "relative",
+          marginTop: "-24px",
         }}
       >
-        Chat With Us
-      </button>
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.7)", // Transparent black overlay
+          }}
+        ></div>
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "100%",
+            textAlign: "center",
+          }}
+        >
+          <h2
+            style={{
+              color: "#fff",
+              fontSize: "36px",
+              fontWeight: 700,
+              marginBottom: "20px",
+            }}
+          >
+            Welcome to Matchy
+          </h2>
+          <p
+            style={{
+              color: "#fff",
+              fontSize: "24px",
+              fontWeight: 500,
+            }}
+          >
+            Where all things trendy
+          </p>
+        </div>
+      </div>
+
+      <div className="container-fluid filter-products-main-box">
+        <div className="row">
+          <div className="col-md-3 filter-box">
+            <h6>Filter by category</h6>
+
+            {spans.map((individualSpan, index) => (
+              <span
+                key={index}
+                id={individualSpan.id}
+                onClick={() => handleChange(individualSpan)}
+                className={individualSpan.id === active ? active : "deactive"}
+              >
+                {individualSpan.text}
+              </span>
+            ))}
+          </div>
+          <div className="col-md-9 product-container-scroll">
+            <div className="product-container">
+              {filteredProducts.length > 0
+                ? filteredProducts.map((product) => (
+                    <div key={product.ID} className="product-card">
+                      <img src={product.url} alt={product.title} />
+                      <h3>{product.title}</h3>
+                      <p>{product.description}</p>
+                      <p>${product.price}</p>
+                      <button onClick={() => addToCart(product)}>
+                        Add to Cart
+                      </button>
+                    </div>
+                  ))
+                : products.map((product) => (
+                    <div key={product.ID} className="product-card">
+                      <img src={product.url} alt={product.title} />
+                      <h3>{product.title}</h3>
+                      <p>{product.description}</p>
+                      <p>${product.price}</p>
+                      <button onClick={() => addToCart(product)}>
+                        Add to Cart
+                      </button>
+                    </div>
+                  ))}
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
