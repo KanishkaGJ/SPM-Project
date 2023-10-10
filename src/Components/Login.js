@@ -78,7 +78,7 @@ export const Login = () => {
         <center style={{ marginLeft: "50%" }}>
           <br />
           <br />
-          <h1 style={{ marginTop: "-20%", marginBottom: "10%" }}>
+          <h1 style={{ marginTop: "45%", marginBottom: "10%" }}>
             Welcome Back!
           </h1>
           <h6 style={{ marginBottom: "15%" }}>Login to continue</h6>

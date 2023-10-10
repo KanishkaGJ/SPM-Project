@@ -103,13 +103,13 @@ export const Signup = () => {
   return (
     <div className="container" style={containerStyle}>
       <div style={formContainerStyle}>
-        <img src={login} alt="Your Image" style={{ marginLeft: "-26%" }} />
+        <img src={login} alt="Your Image" style={{ marginLeft: "-26%", marginBottom:"-7%" }} />
       </div>
       <div style={contentStyle}>
         <center style={{ marginLeft: "50%" }}>
           <br />
           <br />
-          <h1>Sign Up</h1>
+          <h1 style={{ marginBottom:"12%", marginTop:"10%" }}>Sign Up</h1>
           {successMsg && (
             <>
               <div className="success-msg">{successMsg}</div>
