@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { auth, fs } from "../Config/Config";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import login from "../Images/login.png";
 import Button from "@mui/material/Button";
 
 export const Signup = () => {
@@ -91,26 +92,21 @@ export const Signup = () => {
     alignItems: "center",
   };
 
-  // Replace with your image URL
-  const imageUrl = "https://example.com/signup-image.jpg";
+  // Disable scrolling when the Login component mounts
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
 
   return (
     <div className="container" style={containerStyle}>
       <div style={formContainerStyle}>
-        <img
-          src={imageUrl}
-          alt="Your Image"
-          style={{
-            maxWidth: "100%",
-            maxHeight: "100%",
-            marginLeft: "auto",
-            marginRight: "auto",
-            display: "block",
-          }}
-        />
+        <img src={login} alt="Your Image" style={{ marginLeft: "-26%" }} />
       </div>
       <div style={contentStyle}>
-        <center>
+        <center style={{ marginLeft: "50%" }}>
           <br />
           <br />
           <h1>Sign Up</h1>

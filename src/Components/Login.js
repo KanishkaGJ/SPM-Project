@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "../Config/Config";
 import { useHistory } from "react-router-dom";
@@ -13,7 +13,6 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
-
   const handleLogin = (e) => {
     e.preventDefault();
     auth
@@ -32,29 +31,24 @@ export const Login = () => {
       })
       .catch((error) => setErrorMsg(error.message));
   };
-
   const handleSignupClick = () => {
     history.push("/signup");
   };
-
   const loginButtonStyle = {
-    marginTop: "1%",
+    marginTop: "10%",
     backgroundColor: "black",
     color: "white",
   };
-
   const containerStyle = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
   };
-
   const contentStyle = {
     width: "50%",
     padding: "20px",
   };
-
   const formContainerStyle = {
     width: "50%",
     padding: "20px",
@@ -64,23 +58,25 @@ export const Login = () => {
     alignItems: "center",
   };
 
-  const imageUrl = "https://example.com/your-image.jpg";
+  // Disable scrolling when the Login component mounts
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
 
   return (
     <div className="container" style={containerStyle}>
       <div style={formContainerStyle}>
-        <img
-          src={imageUrl}
-          alt="Your Image"
-          style={{ maxWidth: "100%", maxHeight: "100%" }}
-        />
+        <img src={login} alt="Your Image" style={{ marginLeft: "-26%" }} />
       </div>
       <div style={contentStyle}>
         {/* Add your existing content here */}
-        <center>
+        <center style={{ marginLeft: "50%" }}>
           <br />
           <br />
-          <h1>Login</h1>
+          <h1 style={{ marginTop: "-20%", marginBottom: "20%" }}>Login</h1>
           {successMsg && (
             <>
               <div className="success-msg">{successMsg}</div>
