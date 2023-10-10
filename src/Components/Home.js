@@ -5,10 +5,12 @@ import { auth, fs } from "../Config/Config";
 import { IndividualFilteredProduct } from "./IndividualFilteredProduct";
 import "./Home.css";
 import bannerImage from "../Images/herov2.jpg";
+import ChatComponent from "./ChatBox";
+import ChatBot from "react-simple-chatbot";
+import "./ChatComponent.css";
 import { HomeFooter } from "./HomeFooter.js";
 
 export const Home = (props) => {
-  // getting current user uid
   function GetUserUid() {
     const [uid, setUid] = useState(null);
     useEffect(() => {
@@ -20,10 +22,7 @@ export const Home = (props) => {
     }, []);
     return uid;
   }
-
   const uid = GetUserUid();
-
-  // getting current user function
   function GetCurrentUser() {
     const [user, setUser] = useState(null);
     useEffect(() => {
@@ -44,12 +43,7 @@ export const Home = (props) => {
   }
 
   const user = GetCurrentUser();
-  // console.log(user);
-
-  // state of products
   const [products, setProducts] = useState([]);
-
-  // getting products function
   const getProducts = async () => {
     const products = await fs.collection("Products").get();
     const productsArray = [];
@@ -64,14 +58,10 @@ export const Home = (props) => {
       }
     }
   };
-
   useEffect(() => {
     getProducts();
   }, []);
-
-  // state of totalProducts
   const [totalProducts, setTotalProducts] = useState(0);
-  // getting cart products
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -82,14 +72,9 @@ export const Home = (props) => {
       }
     });
   }, []);
-
-  // globl variable
   let Product;
-
-  // add to cart
   const addToCart = (product) => {
     if (uid !== null) {
-      // console.log(product);
       Product = product;
       Product["qty"] = 1;
       Product["TotalProductPrice"] = Product.qty * Product.price;
@@ -103,8 +88,6 @@ export const Home = (props) => {
       props.history.push("/login");
     }
   };
-
-  // categories list rendering using span tag
   const [spans] = useState([
     { id: "CasualWearTops", text: "Casual Wear Tops" },
     { id: "OfficeWearTops", text: "Office Wear Tops" },
@@ -114,24 +97,14 @@ export const Home = (props) => {
     { id: "OfficeWearBottoms", text: "Office Wear Bottoms" },
     { id: "PartyWear", text: `Party Wear` },
   ]);
-
-  // active class state
   const [active, setActive] = useState("");
-
-  // category state
   const [category, setCategory] = useState("");
-
-  // handle change ... it will set category and active states
   const handleChange = (individualSpan) => {
     setActive(individualSpan.id);
     setCategory(individualSpan.text);
     filterFunction(individualSpan.text);
   };
-
-  // filtered products state
   const [filteredProducts, setFilteredProducts] = useState([]);
-
-  // filter function
   const filterFunction = (text) => {
     if (products.length > 1) {
       const filter = products.filter((product) => product.category === text);
@@ -140,19 +113,15 @@ export const Home = (props) => {
       console.log("no products to filter");
     }
   };
-
-  // return to all products
   const returntoAllProducts = () => {
     setActive("");
     setCategory("");
     setFilteredProducts([]);
   };
-
   return (
     <>
       <Navbar user={user} totalProducts={totalProducts} />
       <br />
-
       <div
         style={{
           backgroundImage: `url(${bannerImage})`,
@@ -251,6 +220,10 @@ export const Home = (props) => {
             </div>
           </div>
         </div>
+       
+      </div>
+      <div className="fixed-chat-component">
+        <ChatComponent />
       </div>
       <HomeFooter />
     </>
