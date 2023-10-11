@@ -10,6 +10,7 @@ import { SellerShop } from "./Components/SellerShop";
 import { Profile } from "./Components/Profile";
 import { EditProduct } from "./Components/EditProduct";
 import { ReportGenerate } from "./Components/ReportGenerate";
+import { Wardrobe } from "./Components/Wardrobe";
 
 export const App = () => {
   return (
@@ -24,6 +25,7 @@ export const App = () => {
         <Route path="/profile" component={Profile} />
         <Route path="/edit-product/:productId" component={EditProduct} />
         <Route path="/report-dashboard" component={ReportGenerate} />
+        <Route path="/wardrobe" component={Wardrobe} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>

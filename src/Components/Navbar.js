@@ -31,7 +31,7 @@ export const Navbar = ({ user, totalProducts }) => {
           </Link>
         </div>
         <div>
-          <Link className="navlink" to="/" style={{ color: "white" }}>
+          <Link className="navlink" to="/wardrobe" style={{ color: "white" }}>
             Magic Wardrobe
           </Link>
         </div>
@@ -79,7 +79,7 @@ export const Navbar = ({ user, totalProducts }) => {
             <div></div>
             <div className="cart-menu-btn">
               <Link className="navlink" to="cart">
-                <Icon icon={shoppingCart} size={20} className="white-icon"/>
+                <Icon icon={shoppingCart} size={20} className="white-icon" />
               </Link>
               <span className="cart-indicator">{totalProducts}</span>
             </div>
