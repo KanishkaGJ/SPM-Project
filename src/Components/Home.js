@@ -219,7 +219,7 @@ export const Home = (props) => {
         </div>
        
       </div>
-
+     
       <HomeFooter />
     </>
   );
