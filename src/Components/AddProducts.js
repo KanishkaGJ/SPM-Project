@@ -145,7 +145,7 @@ export const AddProducts = () => {
                 <option>Casual Wear Bottoms</option>
                 <option>Office Wear Bottoms</option>
                 <option>Party Wear</option>
-              </select> 
+              </select>
               <br></br>
               <label>Prominent Color</label>
               <select
