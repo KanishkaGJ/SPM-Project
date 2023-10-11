@@ -1,17 +1,30 @@
 const express = require('express');
 const cors = require('cors');
 const {v4: uuidv4}=require('uuid');
+const axios = require('axios');
+const bodyParser = require('body-parser');
 const stripe=require('stripe')('sk_test_51Hhu6bK4kL4WRmvG1CtaLDtlClkjv9V1xKVE3Ro1lWJ9lfMgg2VNsxYgaJEgy31ZOMqoKXHaZQ52f00BEK3w3B79001GaLpr7Z');
 
 const app = express();
 app.use(cors());
 
 app.use(express.json());
+app.use(bodyParser.json())
 
 app.get('/',(req,res)=>{
     res.send('Welcome to our Ecommerce Store');
 })
 
+app.post('/predict',async(req,res)=>{
+    try{
+        const response = await axios.post('http://localhost:5000/predict',req.body);
+        res.json(response.data);
+
+    } catch (error){
+        console.log(error);
+        res.status(500).json({error: 'Something went wrong'});
+    }
+});
 app.post('/checkout',async(req, res)=>{
     let error;
     let status;
