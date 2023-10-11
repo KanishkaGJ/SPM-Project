@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { fs } from "../Config/Config";
+import "jspdf-autotable";
+import jsPDF from "jspdf";
 
 export const UserReport = () => {
   const [users, setUsers] = useState([]);
+
   useEffect(() => {
     const fetchUserProfiles = async () => {
       try {
@@ -21,14 +24,45 @@ export const UserReport = () => {
 
   // Function to handle the download report action
   const handleDownloadReport = () => {
-    // Implement your report download logic here
-    // You can use a library or custom code to generate and trigger the download.
-    // For example, you can use the FileSaver.js library.
+    const doc = new jsPDF();
+
+    // Define the header text
+    const headerText = "User Report";
+
+    // Calculate the text width and center it
+    const textWidth = doc.getTextWidth(headerText);
+    const pageWidth = doc.internal.pageSize.width;
+    const x = (pageWidth - textWidth) / 2;
+
+    // Add the centered header to the PDF
+    doc.text(headerText, x, 10); // Center the text horizontally
+
+    // Define the table columns and rows
+    const columns = ["Full Name", "Email", "Contact Number", "Address", "Registered Date"];
+    const rows = users.map((user) => [
+      user.FullName,
+      user.Email,
+      user.ContactNumber,
+      user.Address,
+      user.RegisteredDate, // Include the registered date
+    ]);
+
+    // Add the table to the PDF
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+      startY: 20,
+    });
+
+    // Save the PDF or open it in a new tab
+    doc.save("user_report.pdf");
   };
 
   return (
     <div>
-      <h1>User Report</h1>
+      <br />
+      <h1 style={{ textAlign: "center" }}>All Users</h1>
+      <br />
       <table className="table">
         <thead>
           <tr>
@@ -36,6 +70,7 @@ export const UserReport = () => {
             <th>Email</th>
             <th>Contact Number</th>
             <th>Address</th>
+            <th>Registered Date</th>
           </tr>
         </thead>
         <tbody>
@@ -45,6 +80,7 @@ export const UserReport = () => {
               <td>{user.Email}</td>
               <td>{user.ContactNumber}</td>
               <td>{user.Address}</td>
+              <td>{user.RegisteredDate}</td> {/* Display the registered date */}
             </tr>
           ))}
         </tbody>
