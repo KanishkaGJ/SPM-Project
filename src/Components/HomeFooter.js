@@ -12,10 +12,10 @@ export const HomeFooter = () => {
         <a href="#">About Us</a> {/* New item */}
         <a href="#">Contact Us</a> {/* New item */}
       </div>
-      
+
       <div className="footer-details">
         <p>Developed by Quad 200</p>
-        <a href="/seller-shop">Admin Login</a>
+        <a href="/login-seller">Admin Login</a>
       </div>
     </div>
   );
