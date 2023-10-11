@@ -38,7 +38,7 @@ export const UserReport = () => {
     doc.text(headerText, x, 10); // Center the text horizontally
 
     // Define the table columns and rows
-    const columns = ["Full Name", "Email", "Contact Number", "Address", "Registered Date"];
+    const columns = ["Full Name", "Email", "Contact Number", "Address"];
     const rows = users.map((user) => [
       user.FullName,
       user.Email,
