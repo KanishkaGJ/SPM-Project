@@ -1,20 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar } from "./Navbar";
+import { auth, fs } from "../Config/Config";
 import "./Home.css";
 import "../Components/Wardrobe.css";
 
 export const Wardrobe = () => {
-  const [products, setProducts] = useState([
-    { id: 1, name: "Product 1", image: "/Assets/sh1.png", color:"Black"},
-    { id: 2, name: "Product 2", image: "/Assets/sh2.png", color:"White" },
-    { id: 3, name: "Product 3", image: "/Assets/sh4.png", color:"Black" },
-    { id: 4, name: "Product 4", image: "/Assets/sh3.png", color:"Blue" },
-    { id: 5, name: "Product 5", image: "/Assets/2.png", color:"Cream" },
-    { id: 6, name: "Product 6", image: "/Assets/1.png", color:"Badge" },
-    { id: 7, name: "Product 7", image: "/Assets/3.png", color:"Black" },
-    { id: 8, name: "Product 8", image: "/Assets/tren4.png", color:"Cream" },
-    // Add more products here
-  ]);
+  // state of products
+  const [products, setProducts] = useState([]);
+
+  // getting products function
+  const getProducts = async () => {
+    const products = await fs.collection("Products").get();
+    const productsArray = [];
+    for (var snap of products.docs) {
+      var data = snap.data();
+      data.ID = snap.id;
+      productsArray.push({
+        ...data,
+      });
+      if (productsArray.length === products.docs.length) {
+        setProducts(productsArray);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   const [topContainer, setTopContainer] = useState([]);
   const [bottomContainer, setBottomContainer] = useState([]);
@@ -22,19 +34,35 @@ export const Wardrobe = () => {
 
   const handleAddToContainer = (product) => {
     let container = lastContainer === "top" ? "bottom" : "top";
-  
+
     // Check if the container is empty
-    if ((container === "top" && topContainer.length === 0) || (container === "bottom" && bottomContainer.length === 0)) {
+    if (
+      (container === "top" && topContainer.length === 0) ||
+      (container === "bottom" && bottomContainer.length === 0)
+    ) {
       if (container === "top") {
         setTopContainer([product]);
       } else {
         setBottomContainer([product]);
       }
-  
+
       // Update the last used container
       setLastContainer(container);
     }
-  };  
+  };
+
+  const [combinedColors, setCombinedColors] = useState([]);
+  const [topColor, setTopColor] = useState();
+  const [bottomColor, setBottomColor] = useState();
+
+  // Function to calculate and update the combined color values
+  const calculateCombinedColors = () => {
+    const topColors = topContainer.map((product) => product.color);
+    const bottomColors = bottomContainer.map((product) => product.color);
+    const combined = [...topColors, ...bottomColors];
+    setTopColor(topColors);
+    setBottomColor(bottomColors);
+  };
 
   return (
     <>
@@ -47,10 +75,13 @@ export const Wardrobe = () => {
             </div> */}
             <div className="product-list-w">
               {products.map((product) => (
-                <div key={product.id} className="product-card-w">
-                  <img src={product.image} alt={product.name} />
-                  <h3>{product.name}</h3>
-                  <button onClick={() => handleAddToContainer(product)} className="product-card-w button">
+                <div key={product.id} className="product-card">
+                  <img src={product.url} alt={product.title} />
+                  <h3>{product.title}</h3>
+                  <button
+                    onClick={() => handleAddToContainer(product)}
+                    className="product-card-w button"
+                  >
                     Add
                   </button>
                 </div>
@@ -64,7 +95,7 @@ export const Wardrobe = () => {
             <div className="container-content-w">
               {topContainer.map((product) => (
                 <div key={product.id} className="container-item-w">
-                  <img src={product.image} alt={product.name} />
+                  <img src={product.url} alt={product.title} />
                 </div>
               ))}
             </div>
@@ -74,13 +105,26 @@ export const Wardrobe = () => {
             <div className="container-content-w">
               {bottomContainer.map((product) => (
                 <div key={product.id} className="container-item-w">
-                  <img src={product.image} alt={product.name} />
+                  <img src={product.url} alt={product.title} />
                 </div>
               ))}
             </div>
+          </div>
+          {/* Button to calculate and display combined colors */}
+          <div className="calculate-button-w">
+            <button onClick={calculateCombinedColors}>
+              Calculate Combined Colors
+            </button>
+          </div>
+        </div>
+        <div className="combined-colors-w">
+          <h2>Combined Colors</h2>
+          <div className="combined-colors-content-w">
+            <h1>{topColor}</h1>
+            <h1>{bottomColor}</h1>
           </div>
         </div>
       </div>
     </>
   );
-}
+};

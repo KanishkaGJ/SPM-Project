@@ -96,7 +96,7 @@
   width: 50%;
   flex-direction: column;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   border-left: 1px solid #ccc;
 }
 
@@ -120,4 +120,44 @@
   max-width: 100%;
   max-height: 100%;
   height: auto;
+}
+
+.calculate-button-w {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.calculate-button-w button {
+  padding: 10px 20px;
+  background-color: #000000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.calculate-button-w button:hover {
+  background-color: #9d9e9e;
+}
+
+.combined-colors-w {
+  display: flex; /* Display combined colors horizontally */
+  align-items: center; /* Vertically center items */
+  margin-top: 20px;
+}
+
+.combined-colors-w h2 {
+  font-size: 18px;
+  margin-right: 20px; /* Add spacing between heading and color items */
+}
+
+.combined-colors-content-w {
+  display: flex;
+  gap: 10px;
+}
+
+.color-item-w {
+  padding: 10px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
