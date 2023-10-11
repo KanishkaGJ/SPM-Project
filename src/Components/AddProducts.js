@@ -198,7 +198,7 @@ export const AddProducts = () => {
             </>
           )}
           <div className="product-image">
-            {image && <img src={bannerImage} alt="ProductBanner" />}
+            <img src={bannerImage} alt="ProductBanner" />
           </div>
         </div>
       </div>
