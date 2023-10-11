@@ -54,6 +54,7 @@ export const Wardrobe = () => {
   const [combinedColors, setCombinedColors] = useState([]);
   const [topColor, setTopColor] = useState();
   const [bottomColor, setBottomColor] = useState();
+  const [isMatching, setIsMatching] = useState();
 
   // Function to calculate and update the combined color values
   const calculateCombinedColors = () => {
@@ -62,6 +63,13 @@ export const Wardrobe = () => {
     const combined = [...topColors, ...bottomColors];
     setTopColor(topColors);
     setBottomColor(bottomColors);
+
+    fetch(
+      `http://127.0.0.1:5001/?top=${topColors[0]}&bottom=${bottomColors[0]}`
+    )
+      .then((response) => response.json())
+      .then((data) => setIsMatching(data))
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -122,6 +130,7 @@ export const Wardrobe = () => {
           <div className="combined-colors-content-w">
             <h1>{topColor}</h1>
             <h1>{bottomColor}</h1>
+            <h1>{isMatching}</h1>
           </div>
         </div>
       </div>
