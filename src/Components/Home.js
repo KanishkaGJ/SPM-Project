@@ -5,9 +5,6 @@ import { auth, fs } from "../Config/Config";
 import { IndividualFilteredProduct } from "./IndividualFilteredProduct";
 import "./Home.css";
 import bannerImage from "../Images/herov2.jpg";
-import ChatComponent from "./ChatBox";
-import ChatBot from "react-simple-chatbot";
-import "./ChatComponent.css";
 import { HomeFooter } from "./HomeFooter.js";
 
 export const Home = (props) => {
@@ -178,17 +175,17 @@ export const Home = (props) => {
         <div className="row">
           <div className="col-md-3 filter-box">
             <h6>Filter by category</h6>
-            
+
             {spans.map((individualSpan, index) => (
               <div className="underline" style={{ marginBottom: "20px" }}>
-              <span
-                key={index}
-                id={individualSpan.id}
-                onClick={() => handleChange(individualSpan)}
-                className={individualSpan.id === active ? active : "deactive"}
-              >
-                {individualSpan.text}
-              </span>
+                <span
+                  key={index}
+                  id={individualSpan.id}
+                  onClick={() => handleChange(individualSpan)}
+                  className={individualSpan.id === active ? active : "deactive"}
+                >
+                  {individualSpan.text}
+                </span>
               </div>
             ))}
           </div>
@@ -220,10 +217,6 @@ export const Home = (props) => {
             </div>
           </div>
         </div>
-       
-      </div>
-      <div className="fixed-chat-component">
-        <ChatComponent />
       </div>
       <HomeFooter />
     </>
