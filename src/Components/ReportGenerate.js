@@ -1,34 +1,28 @@
 import React from "react";
-import { Navbar } from "./Navbar";
+import { SellerNavBar } from "./SellerNavBar";
 import "./Dashboard.css"; // Import your CSS file for styling
-import 'jspdf-autotable';
-import jsPDF from 'jspdf';
-
+import "jspdf-autotable";
+import jsPDF from "jspdf";
 
 function generatePDFReport() {
   const doc = new jsPDF();
-  doc.text('My PDF Report', 10, 10); // Add title
+  doc.text("My PDF Report", 10, 10); // Add title
   // Add content to the PDF
   doc.setFontSize(14);
-  doc.text('Section 1: Introduction', 10, 30);
+  doc.text("Section 1: Introduction", 10, 30);
   doc.setFontSize(12);
   doc.text(
-    'This is a sample PDF report generated using jsPDF in a React application. It includes text, a table, and an image.',
+    "This is a sample PDF report generated using jsPDF in a React application. It includes text, a table, and an image.",
     10,
     40
   );
 
-  
-
-
   // Add a section with an image
   doc.setFontSize(14);
-  doc.text('Section 3: Sample Image', 10, 160);
-
-
+  doc.text("Section 3: Sample Image", 10, 160);
 
   // Save the PDF or open it in a new tab
-  doc.save('report.pdf');
+  doc.save("report.pdf");
 }
 
 export const ReportGenerate = () => {
@@ -40,7 +34,7 @@ export const ReportGenerate = () => {
 
   return (
     <>
-    <Navbar/>
+      <SellerNavBar />
       <div className="dashboard">
         <h2>Report Generation Dashboard</h2>
         <div className="button-container">
@@ -64,6 +58,3 @@ export const ReportGenerate = () => {
     </>
   );
 };
-
-
-

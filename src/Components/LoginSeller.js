@@ -28,7 +28,7 @@ export const LoginSeller = () => {
         setErrorMsg("");
         setTimeout(() => {
           setSuccessMsg("");
-          history.push("/add-products");
+          history.push("/seller-shop");
         }, 3000);
       })
       .catch((error) => setErrorMsg(error.message));
@@ -47,6 +47,7 @@ export const LoginSeller = () => {
     alignItems: "center",
     height: "100vh",
     background: `url(${background}) no-repeat center center fixed`,
+    maxWidth: "-webkit-fill-available",
     backgroundSize: "cover",
   };
   const cardStyle = {
@@ -125,13 +126,7 @@ export const LoginSeller = () => {
                 LOGIN
               </Button>
             </form>
-            <Typography
-              variant="body1"
-              align="center"
-              style={{ marginTop: "20px" }}
-            >
-              Don't have an account? <Link to="/signup">SIGNUP</Link>
-            </Typography>
+
             {errorMsg && (
               <div className="error-msg" style={{ marginTop: "20px" }}>
                 {errorMsg}
