@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Navbar } from "./Navbar";
+import { SellerNavBar } from "./SellerNavBar";
 import { Products } from "./Products";
 import { auth, fs } from "../Config/Config";
 import { IndividualFilteredProduct } from "./IndividualFilteredProduct";
@@ -74,7 +74,7 @@ export const SellerShop = (props) => {
 
   return (
     <>
-      <Navbar />
+      <SellerNavBar />
       <br />
 
       <div
