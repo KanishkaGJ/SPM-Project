@@ -5,9 +5,8 @@ import { auth, fs } from "../Config/Config";
 import { IndividualFilteredProduct } from "./IndividualFilteredProduct";
 import "./Home.css";
 import bannerImage from "../Images/herov2.jpg";
-import ChatComponent from "./ChatBox";
-import ChatBot from "react-simple-chatbot";
-import "./ChatComponent.css";
+
+
 import { HomeFooter } from "./HomeFooter.js";
 
 export const Home = (props) => {
@@ -222,9 +221,7 @@ export const Home = (props) => {
         </div>
        
       </div>
-      <div className="fixed-chat-component">
-        <ChatComponent />
-      </div>
+     
       <HomeFooter />
     </>
   );
