@@ -31,12 +31,10 @@ export const Profile = () => {
         });
     }
 
-    // Add the following code to prevent scrolling
     document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
 
     return () => {
-      // Clean up and allow scrolling when the component unmounts
       document.documentElement.style.overflow = "auto";
       document.body.style.overflow = "auto";
     };
@@ -54,7 +52,6 @@ export const Profile = () => {
   const saveEditedProfile = () => {
     const isProfileChanged =
       JSON.stringify(editedProfile) !== JSON.stringify(userProfile);
-
     if (isProfileChanged) {
       Swal.fire({
         title: "Are you sure?",
@@ -107,7 +104,6 @@ export const Profile = () => {
   };
 
   const [totalProducts, setTotalProducts] = useState(0);
-
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -144,7 +140,6 @@ export const Profile = () => {
 
   function GetCurrentUser() {
     const [user, setUser] = useState(null);
-
     useEffect(() => {
       auth.onAuthStateChanged((user) => {
         if (user) {
@@ -159,153 +154,169 @@ export const Profile = () => {
         }
       });
     }, []);
-
     return user;
   }
 
   const user = GetCurrentUser();
 
   return (
-    <div style={{ backgroundColor: "#F0F8FC " }}>
+    <div style={{ backgroundColor: "#F0F8FC", minHeight: "100vh" }}>
       <Navbar user={user} totalProducts={totalProducts} />
-      <div className="container">
-        <br />
-        <br />
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <button className="btn btn-link" onClick={() => history.goBack()}>
-            <Icon
-              icon={arrowLeft}
-              size={34}
-              style={{ marginTop: "2%", marginLeft: "-100%", color: "#000000" }}
-            />
-          </button>
-        </div>
+      <div
+        style={{
+          marginTop: "6%",
+          marginLeft: "auto",
+          marginRight: "auto",
+          maxWidth: "768px",
+          padding: "20px",
+          backgroundColor: "white",
+          borderRadius: "10px",
+          boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
+        }}
+      >
+        <button
+          onClick={() => history.goBack()}
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          <Icon icon={arrowLeft} size={34} style={{ color: "#000000" }} />
+        </button>
         <center>
-          <h1 style={{ marginTop: "-3%" }}>User Profile</h1>
+          <h1>User Profile</h1>
         </center>
-        <br />
         {userProfile && (
           <div>
-            <div className="profile-header">
-              <center>
-                {" "}
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <div
+                style={{
+                  width: "100px",
+                  height: "100px",
+                  backgroundColor: "black",
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: "5%",
+                }}
+              >
                 <div
-                  className="profile-avatar"
                   style={{
-                    width: "100px",
-                    height: "100px",
-                    backgroundColor: "black",
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginTop: "2%",
+                    color: "white",
+                    fontSize: "44px",
                   }}
                 >
-                  <div
-                    className="avatar-letter"
-                    style={{ color: "white", fontSize: "44px" }}
-                  >
-                    {userProfile.FullName.charAt(0).toUpperCase()}
-                  </div>
+                  {userProfile.FullName.charAt(0).toUpperCase()}
                 </div>
-              </center>
-              <div className="profile-details">
-                {editing ? (
-                  <form>
-                    <table
-                      className="table table-borderless"
-                      style={{ marginTop: "3%", marginLeft: "32%" }}
-                    >
-                      <tbody>
-                        <tr>
-                          <th style={{ width: "25%" }}>Full Name:</th>
-                          <td>
-                            <input
-                              type="text"
-                              style={{ width: "25%" }}
-                              className="form-control"
-                              id="FullName"
-                              name="FullName"
-                              value={editedProfile.FullName}
-                              onChange={handleEditChange}
-                            />
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>Email:</th>
-                          <td>
-                            <input
-                              type="email"
-                              style={{ width: "25%" }}
-                              className="form-control"
-                              id="Email"
-                              name="Email"
-                              value={editedProfile.Email}
-                              onChange={handleEditChange}
-                            />
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>Contact Number:</th>
-                          <td>
-                            <input
-                              type="text"
-                              style={{ width: "25%" }}
-                              className="form-control"
-                              id="ContactNumber"
-                              name="ContactNumber"
-                              value={editedProfile.ContactNumber}
-                              onChange={handleEditChange}
-                            />
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>Address:</th>
-                          <td>
-                            <input
-                              type="text"
-                              style={{ width: "25%" }}
-                              className="form-control"
-                              id="Address"
-                              name="Address"
-                              value={editedProfile.Address}
-                              onChange={handleEditChange}
-                            />
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </form>
-                ) : (
+              </div>
+            </div>
+            <div>
+              {editing ? (
+                <form>
                   <table
-                    className="table table-borderless"
-                    style={{ marginTop: "3%", marginLeft: "32%" }}
+                    style={{
+                      width: "100%",
+                      marginTop: "3%",
+                      marginLeft: "2%",
+                    }}
                   >
                     <tbody>
                       <tr>
-                        <th style={{ width: "25%" }}>Full Name</th>
-                        <td>{userProfile.FullName}</td>
+                        <th style={{ width: "25%" }}>Full Name:</th>
+                        <td>
+                          <input
+                            type="text"
+                            style={{ width: "100%" }}
+                            className="form-control"
+                            id="FullName"
+                            name="FullName"
+                            value={editedProfile.FullName}
+                            onChange={handleEditChange}
+                          />
+                        </td>
                       </tr>
                       <br />
                       <tr>
-                        <th>Email</th>
-                        <td>{userProfile.Email}</td>
+                        <th>Email:</th>
+                        <td>
+                          <input
+                            type="email"
+                            style={{ width: "100%" }}
+                            className="form-control"
+                            id="Email"
+                            name="Email"
+                            value={editedProfile.Email}
+                            onChange={handleEditChange}
+                          />
+                        </td>
                       </tr>
                       <br />
                       <tr>
-                        <th>Contact Number</th>
-                        <td>{userProfile.ContactNumber}</td>
+                        <th>Contact Number:</th>
+                        <td>
+                          <input
+                            type="text"
+                            style={{ width: "100%" }}
+                            className="form-control"
+                            id="ContactNumber"
+                            name="ContactNumber"
+                            value={editedProfile.ContactNumber}
+                            onChange={handleEditChange}
+                          />
+                        </td>
                       </tr>
                       <br />
                       <tr>
-                        <th>Address</th>
-                        <td>{userProfile.Address}</td>
+                        <th>Address:</th>
+                        <td>
+                          <input
+                            type="text"
+                            style={{ width: "100%" }}
+                            className="form-control"
+                            id="Address"
+                            name="Address"
+                            value={editedProfile.Address}
+                            onChange={handleEditChange}
+                          />
+                        </td>
                       </tr>
                     </tbody>
                   </table>
-                )}
-              </div>
+                </form>
+              ) : (
+                <table
+                  style={{
+                    width: "100%",
+                    marginTop: "5%",
+                    marginLeft: "32%",
+                    marginBottom: "10%",
+                  }}
+                >
+                  <tbody>
+                    <tr>
+                      <th style={{ width: "25%" }}>Full Name</th>
+                      <td>{userProfile.FullName}</td>
+                    </tr>
+                    <br />
+                    <tr>
+                      <th>Email</th>
+                      <td>{userProfile.Email}</td>
+                    </tr>
+                    <br />
+                    <tr>
+                      <th>Contact Number</th>
+                      <td>{userProfile.ContactNumber}</td>
+                    </tr>
+                    <br />
+                    <tr>
+                      <th>Address</th>
+                      <td>{userProfile.Address}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              )}
             </div>
             <center>
               <div style={{ marginTop: "30px" }}>
@@ -333,30 +344,6 @@ export const Profile = () => {
                 >
                   Delete Account
                 </button>
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br/>
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <div style={{ color: "white" }}></div>
               </div>
             </center>
           </div>
