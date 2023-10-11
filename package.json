@@ -25,6 +25,7 @@
     "react-scripts": "4.0.3",
     "react-stripe-checkout": "^2.6.3",
     "react-toastify": "^8.0.2",
+    "shebang-regex": "^4.0.0",
     "stripe": "^8.174.0",
     
     "sweetalert2": "^11.7.32",
