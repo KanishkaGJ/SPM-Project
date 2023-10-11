@@ -58,14 +58,9 @@
   max-width: 100%;
   height: auto;
 }
-
-.btn-custom {
-  background-color: #000000;
-  color: #fff;
-}
-.btn-custom:hover {
-  background-color: #2f2f2f;
-  color: #fff;
+.btn-addProduct {
+  background-color: black;
+  color: white;
 }
 
 .center-submit {

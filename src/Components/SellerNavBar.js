@@ -27,7 +27,11 @@ export const SellerNavBar = ({ user, totalProducts }) => {
       </div>
       <div className="centered-links">
         <div>
-          <Link className="navlink" to="/" style={{ color: "white" }}>
+          <Link
+            className="navlink"
+            to="/seller-shop"
+            style={{ color: "white" }}
+          >
             All Inventory
           </Link>
         </div>
@@ -41,55 +45,24 @@ export const SellerNavBar = ({ user, totalProducts }) => {
           </Link>
         </div>
         <div>
-          <Link className="navlink" to="/" style={{ color: "white" }}>
+          <Link
+            className="navlink"
+            to="/report-dashboard"
+            style={{ color: "white" }}
+          >
             Generate Reports
           </Link>
         </div>
       </div>
       <div className="rightside">
-        {!user && (
-          <>
-            <div>
-              <Link className="navlink" to="signup" style={{ color: "white" }}>
-                SIGN UP
-              </Link>
-            </div>
-            <div>
-              <Link className="navlink" to="login" style={{ color: "white" }}>
-                LOGIN
-              </Link>
-            </div>
-          </>
-        )}
-        {user && (
-          <>
-            <div>
-              <Link
-                className="navlink"
-                to="/profile"
-                style={{
-                  color: "white",
-                  fontSize: "14px",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                Hi, {user}
-              </Link>
-            </div>
-            <div></div>
-            <div className="cart-menu-btn">
-              <Link className="navlink" to="cart">
-                <Icon icon={shoppingCart} size={20} className="white-icon" />
-              </Link>
-              <span className="cart-indicator">{totalProducts}</span>
-            </div>
-            <div></div>
-            <div></div>
-            <div onClick={handleLogout} className="logout-button">
-              LOGOUT
-            </div>
-          </>
-        )}
+        <div></div>
+        <div></div>
+        <div></div>
+        <Link to="/login-seller">
+          <div className="logout-button" style={{ textDecoration: "none" }}>
+            LOGOUT
+          </div>
+        </Link>
       </div>
     </div>
   );

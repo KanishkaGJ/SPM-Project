@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { storage, fs } from "../Config/Config";
 import "./AddProduct.css";
-import bannerImage from "../Images/addProduct.jpg";
+import bannerImage from "../Images/addProduct.png";
 import { SellerNavBar } from "./SellerNavBar";
 import { SellerFooter } from "./SellerFooter";
 
@@ -165,6 +165,7 @@ export const AddProducts = () => {
                 <option>Orange</option>
                 <option>Pink</option>
                 <option>Brown</option>
+                <option>Grey</option>
               </select>
               <br></br>
               <label>Upload Product Image</label>
@@ -184,7 +185,7 @@ export const AddProducts = () => {
               )}
               <br></br>
               <div className="center-submit">
-                <button type="submit" className="btn btn-custom btn-md">
+                <button type="submit" className="btn-addProduct">
                   SUBMIT
                 </button>
               </div>
@@ -198,7 +199,7 @@ export const AddProducts = () => {
             </>
           )}
           <div className="product-image">
-            {image && <img src={bannerImage} alt="ProductBanner" />}
+            <img src={bannerImage} alt="ProductBanner" />
           </div>
         </div>
       </div>
