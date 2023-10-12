@@ -6,8 +6,10 @@ import { IndividualFilteredProduct } from "./IndividualFilteredProduct";
 import "./Home.css";
 import bannerImage from "../Images/herov2.jpg";
 import { HomeFooter } from "./HomeFooter.js";
-
+import "./chatStyle.css";
+import { Chatbot } from "./Chat";
 export const Home = (props) => {
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
   function GetUserUid() {
     const [uid, setUid] = useState(null);
     useEffect(() => {
@@ -38,7 +40,6 @@ export const Home = (props) => {
     }, []);
     return user;
   }
-
   const user = GetCurrentUser();
   const [products, setProducts] = useState([]);
   const getProducts = async () => {
@@ -115,6 +116,17 @@ export const Home = (props) => {
     setCategory("");
     setFilteredProducts([]);
   };
+  const openChatbot = () => {
+    setIsChatbotOpen(true);
+  };
+  const closeChatbot = () => {
+    setIsChatbotOpen(false);
+  };
+
+  const toggleChatbot = () => {
+    setIsChatbotOpen(!isChatbotOpen);
+  };
+  
   return (
     <>
       <Navbar user={user} totalProducts={totalProducts} />
@@ -170,12 +182,10 @@ export const Home = (props) => {
           </p>
         </div>
       </div>
-
       <div className="container-fluid filter-products-main-box">
         <div className="row">
           <div className="col-md-3 filter-box">
             <h6>Filter by category</h6>
-
             {spans.map((individualSpan, index) => (
               <div className="underline" style={{ marginBottom: "20px" }}>
                 <span
@@ -217,9 +227,11 @@ export const Home = (props) => {
             </div>
           </div>
         </div>
-       
       </div>
-     
+      <div className="chat-button">
+      <button onClick={toggleChatbot}>Chat</button>
+    </div>
+    {isChatbotOpen && <Chatbot />}
       <HomeFooter />
     </>
   );

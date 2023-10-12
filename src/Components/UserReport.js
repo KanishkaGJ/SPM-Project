@@ -38,13 +38,12 @@ export const UserReport = () => {
     doc.text(headerText, x, 10); // Center the text horizontally
 
     // Define the table columns and rows
-    const columns = ["Full Name", "Email", "Contact Number", "Address", "Registered Date"];
+    const columns = ["Full Name", "Email", "Contact Number", "Address"];
     const rows = users.map((user) => [
       user.FullName,
       user.Email,
       user.ContactNumber,
-      user.Address,
-      user.RegisteredDate, // Include the registered date
+      user.Address, // Include the registered date
     ]);
 
     // Add the table to the PDF
@@ -59,35 +58,96 @@ export const UserReport = () => {
   };
 
   return (
-    <div>
-      <br />
-      <h1 style={{ textAlign: "center" }}>All Users</h1>
-      <br />
-      <table className="table">
+    <div style={{ padding: "20px" }}>
+      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>User Details</h1>
+      <table
+        style={{
+          width: "100%",
+          borderCollapse: "collapse",
+          margin: "0 auto",
+        }}
+      >
         <thead>
           <tr>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>Contact Number</th>
-            <th>Address</th>
-            <th>Registered Date</th>
+            <th
+              style={{
+                backgroundColor: "#333",
+                color: "white",
+                padding: "8px",
+              }}
+            >
+              Full Name
+            </th>
+            <th
+              style={{
+                backgroundColor: "#333",
+                color: "white",
+                padding: "8px",
+              }}
+            >
+              Email
+            </th>
+            <th
+              style={{
+                backgroundColor: "#333",
+                color: "white",
+                padding: "8px",
+              }}
+            >
+              Contact Number
+            </th>
+            <th
+              style={{
+                backgroundColor: "#333",
+                color: "white",
+                padding: "8px",
+              }}
+            >
+              Address
+            </th>
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td>{user.FullName}</td>
-              <td>{user.Email}</td>
-              <td>{user.ContactNumber}</td>
-              <td>{user.Address}</td>
-              <td>{user.RegisteredDate}</td> {/* Display the registered date */}
+          {users.map((user, index) => (
+            <tr
+              key={user.id}
+              style={{
+                backgroundColor: index % 2 === 0 ? "#f2f2f2" : "white",
+              }}
+            >
+              <td style={{ padding: "8px" }}>{user.FullName}</td>
+              <td style={{ padding: "8px" }}>{user.Email}</td>
+              <td style={{ padding: "8px" }}>{user.ContactNumber}</td>
+              <td style={{ padding: "8px" }}>{user.Address}</td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {/* Download report button */}
-      <button onClick={handleDownloadReport}>Download Report</button>
+      <div
+        style={{
+          position: "absolute",
+          bottom: "10px", // Adjust the distance from the bottom as needed
+          left: "50%",
+          transform: "translateX(-50%)", // Center the button horizontally
+          textAlign: "center",
+          width: "100%",
+        }}
+      >
+        <button
+          onClick={handleDownloadReport}
+          style={{
+            backgroundColor: "#4CAF50",
+            color: "white",
+            border: "none",
+            padding: "10px 20px",
+            fontSize: "16px",
+            cursor: "pointer",
+          }}
+        >
+          Download Report
+        </button>
+      </div>
     </div>
   );
 };
