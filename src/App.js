@@ -13,6 +13,7 @@ import { LoginSeller } from "./Components/LoginSeller";
 import { ReportGenerate } from "./Components/ReportGenerate";
 import {UserReport} from "./Components/UserReport"
 import { Chatbot } from "./Components/Chat";
+import { CartReport } from "./Components/CartReport";
 
 export const App = () => {
   return (
@@ -30,6 +31,7 @@ export const App = () => {
         <Route path="/report-dashboard" component={ReportGenerate} />
         <Route path="/user-report" component={UserReport}/>
         <Route path="/chat" component={Chatbot}/>
+        <Route path="/cart-report" component={CartReport}/>
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>

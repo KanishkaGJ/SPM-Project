@@ -5,7 +5,6 @@ import "./Dashboard.css"; // Import your CSS file for styling
 import 'jspdf-autotable';
 import jsPDF from 'jspdf';
 
-
 function generatePDFReport() {
   const doc = new jsPDF();
   doc.text('My PDF Report', 10, 10); // Add title
@@ -19,14 +18,9 @@ function generatePDFReport() {
     40
   );
 
-  
-
-
   // Add a section with an image
   doc.setFontSize(14);
   doc.text('Section 3: Sample Image', 10, 160);
-
-
 
   // Save the PDF or open it in a new tab
   doc.save('report.pdf');
@@ -38,6 +32,8 @@ export const ReportGenerate = () => {
   const handleGenerateReport = (reportType) => {
     if (reportType === "User Management Report") {
       history.push("/user-report"); // Navigate to "/user-report"
+    } else if (reportType === "Cart Management Report") {
+      history.push("/cart-report"); // Navigate to "/cart-report"
     } else {
       console.log(`Generating ${reportType} report...`);
     }
@@ -45,11 +41,11 @@ export const ReportGenerate = () => {
 
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <div className="dashboard">
         <h2>Report Generation Dashboard</h2>
         <div className="button-container">
-          <button onClick={generatePDFReport} className="report-button">
+          <button onClick={()=>handleGenerateReport("Cart Management Report")}>
             Generate Cart Report
           </button>
           <button
@@ -69,6 +65,3 @@ export const ReportGenerate = () => {
     </>
   );
 };
-
-
-
