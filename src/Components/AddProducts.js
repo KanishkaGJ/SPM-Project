@@ -4,6 +4,7 @@ import "./AddProduct.css";
 import bannerImage from "../Images/addProduct.png";
 import { SellerNavBar } from "./SellerNavBar";
 import { SellerFooter } from "./SellerFooter";
+import { useHistory } from "react-router-dom";
 
 export const AddProducts = () => {
   const [title, setTitle] = useState("");
@@ -17,6 +18,8 @@ export const AddProducts = () => {
 
   const [successMsg, setSuccessMsg] = useState("");
   const [uploadError, setUploadError] = useState("");
+
+  const history = useHistory();
 
   const types = ["image/jpg", "image/jpeg", "image/png", "image/PNG"];
   const handleProductImg = (e) => {
@@ -36,23 +39,30 @@ export const AddProducts = () => {
 
   const handleAddProducts = (e) => {
     e.preventDefault();
-    // console.log(title, description, price);
-    // console.log(image);
+
+    // Upload the image to Firebase Storage
     const uploadTask = storage.ref(`product-images/${image.name}`).put(image);
+
     uploadTask.on(
       "state_changed",
       (snapshot) => {
+        // Track the upload progress if needed
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(progress);
+        console.log(`Upload progress: ${progress}%`);
       },
-      (error) => setUploadError(error.message),
+      (error) => {
+        // Handle any upload errors
+        setUploadError(error.message);
+      },
       () => {
+        // Image upload is complete, get the image URL
         storage
           .ref("product-images")
           .child(image.name)
           .getDownloadURL()
           .then((url) => {
+            // Add the product data to Firestore
             fs.collection("Products")
               .add({
                 title,
@@ -63,20 +73,30 @@ export const AddProducts = () => {
                 url,
               })
               .then(() => {
+                // Product added successfully, reset form fields and show success message
                 setSuccessMsg("Product added successfully");
                 setTitle("");
                 setDescription("");
                 setCategory("");
                 setPrice("");
                 setColor("");
-                document.getElementById("file").value = "";
+                setImage(null);
                 setImageError("");
                 setUploadError("");
                 setTimeout(() => {
                   setSuccessMsg("");
-                }, 3001);
+                  // Navigate to 'seller-shop'
+                  history.push("/seller-shop");
+                }, 3000);
               })
-              .catch((error) => setUploadError(error.message));
+              .catch((error) => {
+                // Handle Firestore database errors
+                setUploadError(error.message);
+              });
+          })
+          .catch((error) => {
+            // Handle image URL retrieval errors
+            setUploadError(error.message);
           });
       }
     );
