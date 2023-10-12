@@ -31,7 +31,7 @@ export const Navbar = ({ user, totalProducts }) => {
           </Link>
         </div>
         <div>
-          <Link className="navlink" to="/" style={{ color: "white" }}>
+          <Link className="navlink" to="/wardrobe" style={{ color: "white" }}>
             Magic Wardrobe
           </Link>
         </div>

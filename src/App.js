@@ -15,6 +15,7 @@ import { UserReport } from "./Components/UserReport";
 import { Chatbot } from "./Components/Chat";
 import { InventoryReport } from "./Components/InventoryReport";
 import { CartReport } from "./Components/CartReport";
+import { Wardrobe } from "./Components/Wardrobe";
 
 export const App = () => {
   return (
@@ -34,6 +35,7 @@ export const App = () => {
         <Route path="/chat" component={Chatbot} />
         <Route path="/invt-report" component={InventoryReport} />
         <Route path="/cart-report" component={CartReport} />
+        <Route path="/wardrobe" component={Wardrobe} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
