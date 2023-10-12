@@ -5,12 +5,10 @@ export const HomeFooter = () => {
   return (
     <div className="footer">
       <div className="footer-links">
-        <a href="#">All inventory</a>
-        <a href="#">Add products</a>
-        <a href="/report-dashboard">Generate reports</a>
-        <a href="#">Magic Wardrobe</a> {/* New item */}
-        <a href="#">About Us</a> {/* New item */}
-        <a href="#">Contact Us</a> {/* New item */}
+        <a href="/">All Items</a>
+        <a href="#">Magic Wardrobe</a>
+        <a href="#">About Us</a>
+        <a href="#">Contact Us</a>
       </div>
 
       <div className="footer-details">
