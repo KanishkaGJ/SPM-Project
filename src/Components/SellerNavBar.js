@@ -20,7 +20,7 @@ export const SellerNavBar = ({ user, totalProducts }) => {
     <div className="navbar">
       <div className="leftside">
         <div className="logo">
-          <Link className="navlink" to="/">
+          <Link className="navlink" to="/seller-shop">
             <img src={logo2} alt="logo" />
           </Link>
         </div>
