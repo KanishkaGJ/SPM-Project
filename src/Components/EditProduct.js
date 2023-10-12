@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom"; // Import useHistory
+import { useParams, useHistory } from "react-router-dom";
 import { fs, storage } from "../Config/Config";
-import "./EditProduct.css"; // Import the CSS file for styling
+import "./EditProduct.css";
+import Swal from 'sweetalert2';
 
 export const EditProduct = () => {
   const { productId } = useParams();
-  const history = useHistory(); // Initialize history
+  const history = useHistory();
   const [product, setProduct] = useState({});
   const [editedProduct, setEditedProduct] = useState({
     title: "",
@@ -13,9 +14,8 @@ export const EditProduct = () => {
     price: 0,
     url: "",
   });
-
   const [imageFile, setImageFile] = useState(null);
-  const [isProductUpdated, setProductUpdated] = useState(false); // State for the success message
+  const [isProductUpdated, setProductUpdated] = useState(false);
 
   useEffect(() => {
     fs.collection("Products")
@@ -31,7 +31,6 @@ export const EditProduct = () => {
       });
   }, [productId]);
 
-  // Fetch the product image from Firebase Storage
   useEffect(() => {
     if (product.url) {
       storage
@@ -55,35 +54,31 @@ export const EditProduct = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImageFile(file);
-
-    // Display the selected image immediately
     const url = URL.createObjectURL(file);
     setEditedProduct({ ...editedProduct, url });
   };
 
   const handleSave = () => {
-    // Update the product data in Firestore
     fs.collection("Products")
       .doc(productId)
       .update(editedProduct)
       .then(() => {
-        console.log("Product updated successfully");
-        setProductUpdated(true); // Set success message to true
+        Swal.fire("Success", "Product updated successfully", "success");
+        setProductUpdated(true);
         setTimeout(() => {
-          setProductUpdated(false); // Clear success message after a delay
-          history.push("/seller-shop"); // Navigate to /seller-shop
-        }, 2000); // Delay in milliseconds
+          setProductUpdated(false);
+          history.push("/seller-shop");
+        }, 2000);
       })
       .catch((error) => {
         console.error("Error updating product:", error);
+        Swal.fire("Error", "Failed to update product", "error");
       });
 
-    // If a new image is selected, update the image in Firebase Storage
     if (imageFile) {
       const imageRef = storage.ref().child(`product_images/${productId}`);
       imageRef.put(imageFile).then((snapshot) => {
         snapshot.ref.getDownloadURL().then((url) => {
-          // Update the imageUrl field in Firestore
           fs.collection("Products")
             .doc(productId)
             .update({ url })
@@ -92,6 +87,7 @@ export const EditProduct = () => {
             })
             .catch((error) => {
               console.error("Error updating image URL:", error);
+              Swal.fire("Error", "Failed to update image URL", "error");
             });
         });
       });
@@ -99,17 +95,28 @@ export const EditProduct = () => {
   };
 
   const handleDelete = () => {
-    // Delete the product from Firestore
-    fs.collection("Products")
-      .doc(productId)
-      .delete()
-      .then(() => {
-        console.log("Product deleted successfully");
-        history.push("/seller-shop"); // Navigate to /seller-shop after deletion
-      })
-      .catch((error) => {
-        console.error("Error deleting product:", error);
-      });
+    Swal.fire({
+      title: 'Are You Sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fs.collection("Products")
+          .doc(productId)
+          .delete()
+          .then(() => {
+            Swal.fire("Success", "Product deleted successfully", "success");
+            history.push("/seller-shop");
+          })
+          .catch((error) => {
+            console.error("Error deleting product:", error);
+            Swal.fire("Error", "Failed to delete product", "error");
+          });
+      }
+    });
   };
 
   return (
